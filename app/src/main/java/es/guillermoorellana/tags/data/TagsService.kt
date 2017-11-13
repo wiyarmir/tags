@@ -5,5 +5,5 @@ import retrofit2.http.GET
 
 interface TagsService {
     @GET("tags.json")
-    fun getTags(): Single<List<Tag>>
+    fun getTags(): Single<List<DataTag>>
 }

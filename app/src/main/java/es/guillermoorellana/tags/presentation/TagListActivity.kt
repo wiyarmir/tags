@@ -11,7 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import es.guillermoorellana.tags.R
-import es.guillermoorellana.tags.data.Tag
+import es.guillermoorellana.tags.domain.Tag
 import kotlinx.android.synthetic.main.activity_place_list.*
 import kotlinx.android.synthetic.main.place_list.*
 import kotlinx.android.synthetic.main.place_list_content.view.*
@@ -32,7 +32,7 @@ class TagListActivity : AppCompatActivity() {
                 .data
                 .observe(this, Observer {
                     Log.d("Activity", it.toString())
-                    adapter.values = it!!
+                    adapter.tags = it!!.tags
                     adapter.notifyDataSetChanged()
                 })
 
@@ -44,7 +44,7 @@ class TagListActivity : AppCompatActivity() {
     }
 
     class StateAdapter(
-            internal var values: List<Tag> = emptyList()
+            internal var tags: List<Tag> = emptyList()
     ) : RecyclerView.Adapter<StateAdapter.ViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -54,16 +54,16 @@ class TagListActivity : AppCompatActivity() {
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            val item = values[position]
-            holder.idView.text = item.id.toString()
-            holder.contentView.text = item.tag
+            val item = tags[position]
+            holder.contentView.text = item.name
+            holder.checkView.visibility = if (item.selected) View.VISIBLE else View.GONE
         }
 
-        override fun getItemCount(): Int = values.size
+        override fun getItemCount(): Int = tags.size
 
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-            val idView: TextView = view.id_text
             val contentView: TextView = view.content
+            val checkView: View = view.check
         }
     }
 }
