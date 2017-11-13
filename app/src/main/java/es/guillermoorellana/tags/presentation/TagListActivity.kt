@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import es.guillermoorellana.tags.R
+import es.guillermoorellana.tags.data.Tag
 import kotlinx.android.synthetic.main.activity_place_list.*
 import kotlinx.android.synthetic.main.place_list.*
 import kotlinx.android.synthetic.main.place_list_content.view.*
@@ -31,6 +32,8 @@ class TagListActivity : AppCompatActivity() {
                 .data
                 .observe(this, Observer {
                     Log.d("Activity", it.toString())
+                    adapter.values = it!!
+                    adapter.notifyDataSetChanged()
                 })
 
         setupRecyclerView(place_list)
@@ -41,7 +44,7 @@ class TagListActivity : AppCompatActivity() {
     }
 
     class StateAdapter(
-            internal var values: List<Pair<String, Float>> = emptyList()
+            internal var values: List<Tag> = emptyList()
     ) : RecyclerView.Adapter<StateAdapter.ViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -52,8 +55,8 @@ class TagListActivity : AppCompatActivity() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val item = values[position]
-            holder.idView.text = item.first
-            holder.contentView.text = item.second.toString()
+            holder.idView.text = item.id.toString()
+            holder.contentView.text = item.tag
         }
 
         override fun getItemCount(): Int = values.size
