@@ -7,17 +7,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
 
-class SelectableTagsInteractor(
+class TagStreamInteractor(
         private val tagsRepository: TagsRepository,
         private val selectionRepository: SelectionRepository
 ) {
     fun states(): Flowable<Tags> =
             Flowable.combineLatest(
-                    tagsRepository.getTags().toFlowable(),
-                    selectionRepository.selectionStream,
+                    tagsRepository.getTags().toFlowable(), selectionRepository.selectionStream,
                     BiFunction(::tags))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-
-    fun toggleTag(id: Int): Unit = TODO()
 }

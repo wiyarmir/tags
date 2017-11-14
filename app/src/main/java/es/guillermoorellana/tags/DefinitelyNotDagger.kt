@@ -4,7 +4,8 @@ import com.google.gson.Gson
 import es.guillermoorellana.tags.data.SelectionRepository
 import es.guillermoorellana.tags.data.TagsRepository
 import es.guillermoorellana.tags.data.TagsService
-import es.guillermoorellana.tags.domain.SelectableTagsInteractor
+import es.guillermoorellana.tags.domain.TagSelectionInteractor
+import es.guillermoorellana.tags.domain.TagStreamInteractor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -32,5 +33,6 @@ object DefinitelyNotDagger {
         SelectionRepository()
     }
 
-    val streamStateInteractor = { SelectableTagsInteractor(tagsRepository, selectionRepository) }
+    val tagsInteractor = { TagStreamInteractor(tagsRepository, selectionRepository) }
+    val selectionInteractor = { TagSelectionInteractor(selectionRepository) }
 }
