@@ -11,9 +11,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import es.guillermoorellana.tags.R
 import es.guillermoorellana.tags.domain.Tag
-import kotlinx.android.synthetic.main.activity_place_list.*
-import kotlinx.android.synthetic.main.place_list.*
-import kotlinx.android.synthetic.main.place_list_content.view.*
+import kotlinx.android.synthetic.main.activity_tag_list.*
+import kotlinx.android.synthetic.main.tag_list_content.view.*
 
 class TagListActivity : AppCompatActivity() {
 
@@ -21,7 +20,7 @@ class TagListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_place_list)
+        setContentView(R.layout.activity_tag_list)
 
         setSupportActionBar(toolbar)
         toolbar.title = title
@@ -45,7 +44,7 @@ class TagListActivity : AppCompatActivity() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.place_list_content, parent, false)
+                    .inflate(R.layout.tag_list_content, parent, false)
             return ViewHolder(view)
         }
 
