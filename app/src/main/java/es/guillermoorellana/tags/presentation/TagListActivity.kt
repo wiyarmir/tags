@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +17,7 @@ import kotlinx.android.synthetic.main.place_list_content.view.*
 
 class TagListActivity : AppCompatActivity() {
 
-    private val adapter by lazy { StateAdapter() }
+    private lateinit var adapter: StateAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,24 +26,21 @@ class TagListActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         toolbar.title = title
 
-        ViewModelProviders.of(this)
+        val viewModel = ViewModelProviders.of(this)
                 .get(TagListViewModel::class.java)
-                .data
-                .observe(this, Observer {
-                    Log.d("Activity", it.toString())
-                    adapter.tags = it!!.tags
-                    adapter.notifyDataSetChanged()
-                })
 
-        setupRecyclerView(place_list)
-    }
+        viewModel.data.observe(this, Observer {
+            adapter.tags = it!!.tags
+            adapter.notifyDataSetChanged()
+        })
 
-    private fun setupRecyclerView(recyclerView: RecyclerView) {
-        recyclerView.adapter = adapter
+        adapter = StateAdapter(onClickAction = viewModel::tapTag)
+        place_list.adapter = adapter
     }
 
     class StateAdapter(
-            internal var tags: List<Tag> = emptyList()
+            internal var tags: List<Tag> = emptyList(),
+            private val onClickAction: (Int) -> Unit
     ) : RecyclerView.Adapter<StateAdapter.ViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -57,13 +53,17 @@ class TagListActivity : AppCompatActivity() {
             val item = tags[position]
             holder.contentView.text = item.name
             holder.checkView.visibility = if (item.selected) View.VISIBLE else View.GONE
+            holder.root.setOnClickListener {
+                onClickAction(item.id)
+            }
         }
 
         override fun getItemCount(): Int = tags.size
 
-        inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-            val contentView: TextView = view.content
-            val checkView: View = view.check
-        }
+        inner class ViewHolder(
+                val root: View,
+                val contentView: TextView = root.content,
+                val checkView: View = root.check
+        ) : RecyclerView.ViewHolder(root)
     }
 }

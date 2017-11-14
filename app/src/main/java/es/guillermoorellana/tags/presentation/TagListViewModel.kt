@@ -8,7 +8,7 @@ import es.guillermoorellana.tags.domain.Tags
 import io.reactivex.disposables.CompositeDisposable
 
 class TagListViewModel(
-        interactor: SelectableTagsInteractor = DefinitelyNotDagger.streamStateInteractor()
+        private val interactor: SelectableTagsInteractor = DefinitelyNotDagger.streamStateInteractor()
 ) : ViewModel() {
 
     val data: MutableLiveData<Tags> = MutableLiveData()
@@ -19,11 +19,13 @@ class TagListViewModel(
     }
 
     private fun bindInteractor(interactor: SelectableTagsInteractor) =
-            interactor.getState()
+            interactor.states()
                     .subscribe { data.postValue(it) }
 
     override fun onCleared() {
         super.onCleared()
         disposables.dispose()
     }
+
+    fun tapTag(id: Int) = interactor.toggleTag(id)
 }
