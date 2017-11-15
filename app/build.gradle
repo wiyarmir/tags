@@ -39,6 +39,8 @@ dependencies {
     implementation deps.supportRecyclerView
     implementation deps.supportDesign
 
+    implementation deps.flexbox
+
     def testDeps = rootProject.ext.testDependencies
 
     testImplementation testDeps.junit

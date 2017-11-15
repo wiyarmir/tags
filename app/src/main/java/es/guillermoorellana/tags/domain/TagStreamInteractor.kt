@@ -2,6 +2,7 @@ package es.guillermoorellana.tags.domain
 
 import es.guillermoorellana.tags.data.SelectionRepository
 import es.guillermoorellana.tags.data.TagsRepository
+import es.guillermoorellana.tags.domain.model.Tags
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction

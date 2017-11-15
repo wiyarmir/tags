@@ -5,7 +5,7 @@ import android.arch.lifecycle.ViewModel
 import es.guillermoorellana.tags.DefinitelyNotDagger
 import es.guillermoorellana.tags.domain.TagSelectionInteractor
 import es.guillermoorellana.tags.domain.TagStreamInteractor
-import es.guillermoorellana.tags.domain.Tags
+import es.guillermoorellana.tags.domain.model.Tags
 import io.reactivex.disposables.CompositeDisposable
 
 class TagListViewModel(
@@ -30,4 +30,6 @@ class TagListViewModel(
     }
 
     fun tapTag(id: Int) = selection.toggleTag(id)
+
+    fun removeTag(id: Int) = selection.removeTag(id)
 }

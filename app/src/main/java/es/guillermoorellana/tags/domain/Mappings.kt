@@ -1,6 +1,9 @@
 package es.guillermoorellana.tags.domain
 
 import es.guillermoorellana.tags.data.DataTag
+import es.guillermoorellana.tags.domain.model.SelectedTag
+import es.guillermoorellana.tags.domain.model.Tag
+import es.guillermoorellana.tags.domain.model.Tags
 
 fun tags(tags: List<DataTag>, selection: Set<Int>): Tags =
         Tags(

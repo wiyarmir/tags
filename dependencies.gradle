@@ -15,6 +15,7 @@ ext {
     okHttp = '3.8.0'
     retrofit2 = '2.3.0'
     gson = '2.8.1'
+    flexbox = '0.3.1'
     // Testing
     junit = '4.12'
     mockito = '2.8.9'
@@ -54,6 +55,7 @@ ext {
             retrofitGsonConverter       : "com.squareup.retrofit2:converter-gson:${retrofit2}",
 
             gson                        : "com.google.code.gson:gson:${gson}",
+            flexbox                     : "com.google.android:flexbox:${flexbox}",
     ]
 
     testDependencies = [
