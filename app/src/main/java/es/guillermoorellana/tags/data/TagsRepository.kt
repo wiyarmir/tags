@@ -1,9 +1,9 @@
 package es.guillermoorellana.tags.data
 
-import io.reactivex.Single
+import io.reactivex.Flowable
 
 class TagsRepository(
         private val tagsService: TagsService
 ) {
-    fun getTags(): Single<List<DataTag>> = tagsService.getTags()
+    fun getTags(): Flowable<List<DataTag>> = tagsService.getTags().toFlowable()
 }

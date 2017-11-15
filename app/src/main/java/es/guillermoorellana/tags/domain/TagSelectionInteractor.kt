@@ -7,7 +7,7 @@ class TagSelectionInteractor(
 ) {
 
     fun toggleTag(id: Int) =
-            if (selectionRepository.get().contains(id)) removeTag(id) else addTag(id)
+            if (selectionRepository.get().contains(id)) deselectTag(id) else addTag(id)
 
     private fun addTag(id: Int) {
         selectionRepository.get()
@@ -15,7 +15,7 @@ class TagSelectionInteractor(
                 .let { selectionRepository.store(it) }
     }
 
-    fun removeTag(id: Int) {
+    fun deselectTag(id: Int) {
         selectionRepository.get()
                 .minus(id)
                 .let { selectionRepository.store(it) }

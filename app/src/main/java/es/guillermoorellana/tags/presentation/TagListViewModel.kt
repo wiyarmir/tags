@@ -6,7 +6,9 @@ import es.guillermoorellana.tags.DefinitelyNotDagger
 import es.guillermoorellana.tags.domain.TagSelectionInteractor
 import es.guillermoorellana.tags.domain.TagStreamInteractor
 import es.guillermoorellana.tags.domain.model.Tags
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 
 class TagListViewModel(
         private val tags: TagStreamInteractor = DefinitelyNotDagger.tagsInteractor(),
@@ -22,6 +24,8 @@ class TagListViewModel(
 
     private fun bindInteractor(interactor: TagStreamInteractor) =
             interactor.states()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribe { data.postValue(it) }
 
     override fun onCleared() {
@@ -31,5 +35,5 @@ class TagListViewModel(
 
     fun tapTag(id: Int) = selection.toggleTag(id)
 
-    fun removeTag(id: Int) = selection.removeTag(id)
+    fun removeTag(id: Int) = selection.deselectTag(id)
 }
