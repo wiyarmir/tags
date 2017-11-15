@@ -11,5 +11,6 @@ fun tags(tags: List<DataTag>, selection: Set<Int>): Tags =
                         .map { Tag(it.id, it.tag, it.id in selection) },
                 selectedTags = tags
                         .filter { it.id in selection }
+                        .sortedBy { it.tag }
                         .map { SelectedTag(it.id, it.tag, it.color) }
         )
